@@ -11,3 +11,9 @@ def solution(A, B):
         b_idx += 1
     
     return answer
+
+'''
+A팀의 숫자가 공개된 상태에서
+B팀이 이길수 있는 최대 경우의 수 return
+
+'''
