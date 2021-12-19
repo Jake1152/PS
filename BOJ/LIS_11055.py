@@ -1,8 +1,8 @@
 n = int(input())
 sequence_a = list(map(int, input().split()))
 dp = [ 0 for _ in range(n)]
-result = 0
 dp[0] = sequence_a[0]
+result = dp[0]
 # 앞에서부터 한개씩 진행 현재 숫자가 가장 마지막에 위치한다는 가정
 for i in range(1, n):
     max = 0
