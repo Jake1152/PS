@@ -7,7 +7,7 @@ def check_square(x, y, side):
 		for j in range(y, y+side):
 			if standard_num != paper_matrix[i][j]:
 				return (False)
-	paper_cnt_dict[standard_num] += 1
+	paper_cnt_dict[stzandard_num] += 1
 	return (True)
 
 def count_paper(x, y, side):
