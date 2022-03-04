@@ -1,69 +1,76 @@
 #tomatoes_7576
 from sys import stdin
-
+from collections import deque
 input = stdin.readline
-
-def search():
-	global org_board
-	new_board = [ [0 for _ in range(cols)] for _ in range(rows) ]
-	copy_board(new_board, org_board)
-	# 4 direc bounds
-	dx = [0, 1, 0, -1]
-	dy = [1, 0, -1, 0]
+def append_tomatoes_to_deque(board):
+	toms_queue = deque()
 	for x in range(rows):
 		for y in range(cols):
-			# 현재가 안익어 있다면
-			if org_board[x][y] == 0:
-				# 주변에 익은 토마토가 있는지 4방향 탐색
-				for step_x, step_y in zip(dx, dy):
-					if 0 <= x + step_x < rows and 0 <= y + step_y < cols and\
-						org_board[x + step_x][y + step_y] == 1:
-						new_board[x][y] = 1
-						break 
-	# 다 끝나면 다시 원본 board를 갱신
-	copy_board(org_board, new_board)
+			if board[x][y] == 1:
+				toms_queue.append((x,y))
+	return toms_queue
 
+def bfs(queue):
+	global org_board
+	visited = [[True for _ in range(cols)] for _ in range(rows)]
+	new_board = copy_board(org_board)
+	distance = [[0 for _ in range(cols)] for _ in range(rows)]
+	max_dis = 0
+	while (queue):
+		x, y = queue.popleft()
+		dx = [1, 0, -1, 0]
+		dy = [0, 1, 0, -1]
+		# search 4 direc
+		for direc_x_, direc_y in zip(dx, dy):
+			adj_x, adj_y  = x + direc_x_, y + direc_y
+			if 0 <= adj_x < rows and 0 <= adj_y < cols and\
+				org_board[adj_x][adj_y] == 0 and\
+				new_board[adj_x][adj_y] == 0 and\
+				visited[adj_x][adj_y]:
+				visited[adj_x][adj_y] = False
+				new_board[adj_x][adj_y] = 1
+				queue.append((adj_x, adj_y))
+				distance[adj_x][adj_y] = distance[x][y] + 1
+				if max_dis < distance[adj_x][adj_y]:
+					max_dis = distance[adj_x][adj_y]
+	# print(f"{distance=}")
+	org_board = new_board
+	return max_dis
 
 def check_tomatoes(board):
-	global g_tomatoes_status
-	# cur_tomatoes_status
-	ripe_tomatoes, unripe_tomatoes = 0, 0
 	for i in range(rows):
 		for j in range(cols):
-			if board[i][j] == 1:
-				ripe_tomatoes += 1
-			elif board[i][j] == 0:
-				unripe_tomatoes += 1
-	prev_ripe_tomatoes, prev_unripe_tomatoes = g_tomatoes_status
-	if (ripe_tomatoes == prev_ripe_tomatoes and \
-		unripe_tomatoes == prev_unripe_tomatoes):
-		if unripe_tomatoes > 0:
-			return (-1)
-		return (0)
-	g_tomatoes_status = [ripe_tomatoes, unripe_tomatoes]
+			if board[i][j] == 0:
+				return (-1)
 	return (1)
+
+def copy_board(prev_board):
+	new_board = [[0 for _ in range(cols)] for _ in range(rows)]
+	for i in range(rows):
+		for j in range(cols):
+			new_board[i][j] = prev_board[i][j]
+	return (new_board)
+cols, rows = map(int, input().split())
+org_board = []
+for _ in range(rows):
+	org_board.append(list(map(int, input().split())))
+
+queue = append_tomatoes_to_deque(org_board)
+days = bfs(queue)
+# print(f"{org_board=}")
+if check_tomatoes(org_board) == -1:
+	print(-1)
+else:
+	print(days)
+
+'''
+
+
 
 def copy_board(new_board, prev_board):
 	for i in range(rows):
 		for j in range(cols):
 			new_board[i][j] = prev_board[i][j]
 
-cols, rows = map(int, input().split())
-org_board = []
-for _ in range(rows):
-	org_board.append(list(map(int, input().split())))
 
-# print(f"{org_board=}")
-g_days = 0
-g_tomatoes_status = [0, 0]
-check_tomatoes(org_board)
-while (True):
-	search()
-	flag = check_tomatoes(org_board) 
-	if (flag <= 0):
-		if flag == -1:
-			g_days = -1
-		break
-	g_days += 1
-
-print(g_days)
+'''
