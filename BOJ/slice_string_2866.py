@@ -1,5 +1,6 @@
 # slice string 2866
 string_cnt, string_len = map(int ,input().split())
+col_str_len = [string_cnt][0]
 string_matrix = []
 org_column_str_list = []
 for _ in range(string_cnt):
@@ -11,8 +12,7 @@ for i in range(string_len):
 	org_column_str_list.append(''.join(col_str))
 
 start = 0
-end = string_len
-print(f"{org_column_str_list=}")
+end = col_str_len
 while(start <= end):
 	mid = (start + end)//2
 	cur_str_set = set()
@@ -20,8 +20,10 @@ while(start <= end):
 	for idx in range(string_len):
 		cur_column_str_list.append(org_column_str_list[idx][mid:])
 		cur_str_set.add(org_column_str_list[idx][mid:])
-		print(f"{cur_column_str_list=}")
-		print(f"{cur_str_set=}")
-	break
+	if (len(cur_column_str_list) != len(cur_str_set)):
+		end = mid - 1
+	else:
+		start = mid + 1
+print(start-1)
 
 
