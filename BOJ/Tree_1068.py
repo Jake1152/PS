@@ -11,7 +11,6 @@ def recursive_remove(be_removed_node, node_dict):
 		if key == be_removed_node:
 			for node in value:
 				recursive_remove(node, node_dict)
-				node_dict[node] = [-1]
 			node_dict[key] = [-1]
 
 n = int(input())
