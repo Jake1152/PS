@@ -1,10 +1,12 @@
 #nearest_common_anscestor_3584.py
 def	get_root_node(tree, node_cnt):
 	root_candi = [ 0 for node in range(node_cnt + 1)]
+	# print(f"{tree=}")
 	for child_list in tree:
 		for child_node in child_list:
 			root_candi[child_node] += 1
-	for idx, cnt in enumerate(root_candi):
+	# print(f"{root_candi=}")
+	for idx, cnt in enumerate(root_candi[1:]):
 		if cnt == 0:
 			return idx + 1
 	return -1
@@ -29,15 +31,21 @@ for _ in range(test_cnt):
 	# root
 	# search
 	stack = [root_node]
-	while (True):
-		parent_node = stack[-1]
-		for child_list in tree[parent_node]:
-			for node in child_list:
-				if visited_list[node] == True:
-					visited_list[node] = False
-					# find target
-					if node in target_list:
-						target_list.remove(node)
-						abs_path_list.append(stack)
-					
-	
+	abs_path = []
+	while (stack and target_list):
+		print(f"{stack=}")
+		pop_node = stack.pop()
+		print(f"{abs_path=}")
+		print(f"{pop_node=}")
+		abs_path.append(pop_node)
+		if pop_node in target_list:
+			target_list.remove(pop_node)
+			abs_path_list.append(abs_path)
+		elif tree[pop_node] == [] \
+			or visited_list[pop_node] == False:
+			abs_path.pop()
+		elif visited_list[pop_node] == True:
+			stack += tree[pop_node]
+			visited_list[pop_node] = False
+	print(f"{abs_path_list=}")
+	# abs_path_list
