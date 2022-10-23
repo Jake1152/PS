@@ -27,16 +27,16 @@ for cur_node, parent_node in enumerate(parent_node_list):
 		root_node = cur_node
 
 # print(f"{node_dict=}")
-if root_node == -1:
-	print("error")
-	# error처리
-else:
-	recursive_remove(be_removed_node, node_dict)
-	# be_removed_node 자식을 갖고 있던 리스트에서 해당 element제거
-	for key, sub_node_list in node_dict.items():
-		for node in sub_node_list:
-			if node == be_removed_node:
-				sub_node_list.remove(node)
+# if root_node == -1:
+# 	print("error")
+# 	# error처리
+# else:
+recursive_remove(be_removed_node, node_dict)
+# be_removed_node 자식을 갖고 있던 리스트에서 해당 element제거
+for key, sub_node_list in node_dict.items():
+	for node in sub_node_list:
+		if node == be_removed_node:
+			sub_node_list.remove(node)
 
 # print(f"{node_dict=}")
 
@@ -56,12 +56,14 @@ print(leaf_node_cnt)
 1. 트리구성
 각 노드의 자식 노드를 리스트에 담는다.
 그런식으로 순회한다.
-
 dict안에 list를 담는다.
 
 2. 삭제될 노드 탐색 및 제거
+- 재귀
+2번 
+= [-1]
 
-3. 리트노드 카운팅
+3. 리프노드 카운팅
 
 노드가 0부터 시작이니 dict를 안쓰고
 list로했어도 헷갈리는 부분없이 됐을거 같다.

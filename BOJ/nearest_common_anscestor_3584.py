@@ -6,6 +6,7 @@ def	get_root_node(tree, node_cnt):
 		for child_node in child_list:
 			root_candi[child_node] += 1
 	# print(f"{root_candi=}")
+	# 0은 dummy라서 제외하고 시작해얗나다.
 	for idx, cnt in enumerate(root_candi[1:]):
 		if cnt == 0:
 			return idx + 1
