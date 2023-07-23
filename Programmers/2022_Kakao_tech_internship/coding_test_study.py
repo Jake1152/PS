@@ -22,7 +22,7 @@ def practice(problem, solved_list):
 def solution(alp, cop, problems):
     answer = 0
     solved_list = []
-    asc_problems = deque(sorted(problems, key=lambda x: x[0], x[1]))
+    asc_problems = deque(sorted(problems, key=lambda x: (x[0] + x[1], x[0],  x[1])))
     for problem in asc_problems:
         # print(f"{problem=}")
         if is_can_be_solved((alp, cop), problem) == False:
