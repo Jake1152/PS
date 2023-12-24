@@ -1,0 +1,14 @@
+-- 코드를 입력하세요
+# SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_CD, CATEGORY, PRICE
+# FROM FOOD_PRODUCT 
+# WHERE PRICE=(SELECT MAX(PRICE) FROM FOOD_PRODUCT)
+# 이 방식이 서브쿼리 쓰는 방식보다 빠를 것이라 생각든다
+# 서브쿼리는 O(N**2), 
+
+SELECT * 
+FROM FOOD_PRODUCT 
+ORDER BY PRICE 
+DESC LIMIT 1;
+/* 
+정렬하는 방식은 O(N log N)이지 않을까 한다.
+*/
