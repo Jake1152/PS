@@ -11,16 +11,9 @@ for _ in range(word_count):
         weight = 10 ** exponent
         alpha_weight[char] += weight
 
-# print(f"{alpha_weight=}")
-sorted_alpha_weight = sorted(alpha_weight.items(), key=lambda x: x[1],reverse=True) #(x[1], x[0])
-# sorted(key_value.items(), key=lambda kv: (kv[1], kv[0]))
-# print(f"{sorted_alpha_weight=}")
-
 result = 0
-for idx, (alpha, weight) in enumerate(sorted_alpha_weight):
-    #  alpha, weight = val
+for idx, (_, weight) in enumerate(sorted(alpha_weight.items(), key=lambda x: x[1],reverse=True)):
     num = 9 - idx
-    # print(f"{idx=}, {weight=}")
     result += weight * num 
 
 print(result)
