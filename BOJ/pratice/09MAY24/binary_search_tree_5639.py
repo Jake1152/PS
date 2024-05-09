@@ -1,14 +1,6 @@
-# tree pre-order 
-# from typing import Self
-# from typing_extensions import Self
-# from __future__ import annotations
-
-from sys import setrecursionlimit 
-setrecursionlimit(10**9)
+# from sys import setrecursionlimit 
+# setrecursionlimit(10**9)
 from sys import stdin
-# from sys import stdout
-
-# print = stdout.write
 
 class Node:
     def __init__(self, value:int=None, left=None, right=None):
@@ -16,21 +8,12 @@ class Node:
         self.left_ = left
         self.right_ = right
 
-    # def print(self):
-    #     print(f"{self.value_}, {self.left_}, {self.right_}")
+    def print(self):
+        print(f"{self.value_}, {self.left_}, {self.right_}")
 
-# a_node = Node(42)
-# a_node.print()
-
-# b_node = Node(45)
-# b_node.print()
-
-# c_node = Node(44, a_node, b_node)
-# c_node.print()
 
 class BST():
     def __init__(self):
-        # self.height_ = 0
         self.root_ = None
     
     # root부터 시작
@@ -99,9 +82,27 @@ class BST():
        25      50
     20   27  40  60
 
+    post-queue 30 50 25 60 40
     post-stack 30 50 60 40 25 27 20 
     post 20 27 25 40 60 50 30
     pre  30 25 20 27 50 40 60
+
+    pre  50 30 24 5 28 45 98 52 60
+    post 50 98 52 60 30 45 24 28 5
+
+    Queue 50 98 30
+    Stack 50 
+
+    A 50
+      30 98 
+
+      24 45 None 
+
+    Stack 50 98 52
+
+    98
+
+
     '''
     def iter_post_order(self, node: Node):
         stack = []
@@ -113,24 +114,28 @@ class BST():
         left_node = node.left_
         right_node = node.right_
         node = right_node
+        prev_node = node
         while (node):
             stack.append(node.value_)
             if (node.right_):
                 node = node.right_
-            else:
+            elif (node.left_):
                 node = node.left_
+            else:
+                node = prev_node 
 
         node = left_node
+        prev_node = left_node
         while (node):
             stack.append(node.value_)
+            prev_node = node
             if (node.right_):
                 node = node.right_
-            else:
+            elif (node.left_):
                 node = node.left_
-
-        # print(f"{stack=}")
-
-
+            else:
+                node = prev_node 
+        print(f"{stack=}")
 
 # arr = []
 bst = BST()
@@ -146,18 +151,8 @@ for line in stdin.readlines():
 # print("\npre-order")
 # bst.pre_order(bst.root_)
 # print("\npost-order")
-bst.post_order(bst.root_)
-# bst.iter_post_order(bst.root_)
-
-'''
-전위 순회는 루트부터 방문 
-
-전위 순회를 후위 순회로 변경
-Root - Left - Right
-  50 
-30
-
-'''
+# bst.post_order(bst.root_)
+bst.iter_post_order(bst.root_)
 
 
 '''
