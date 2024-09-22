@@ -18,3 +18,17 @@ class Solution:
                     return False
                 pattern_dict[pattern_alphabet] = word
         return True
+        
+''' Other
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        lst = list(s.split())
+        lst1, lst2 = [], []
+
+        for char in pattern:
+            lst1.append(pattern.index(char))
+        for word in lst:
+            lst2.append(lst.index(word))
+        
+        return lst1 == lst2
+'''
