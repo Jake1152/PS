@@ -30,17 +30,17 @@ f g h i j
 aaabbba 0001110
 bbbbaaa 1111000
 '''
+# a[26] = 0
 class Solution:
-    from collections import defaultdict
     def isIsomorphic(self, s: str, t: str) -> bool:
-        s_character_dict = defaultdict(int)
-        t_character_dict = defaultdict(int)
+        alpha_dict = {}
+        # for in enumerate(t)
         for ch_s, ch_t in zip(s, t):
-            s_character_dict[ch_s] += 1
-            t_character_dict[ch_t] += 1
-            # print(f"{ch_s=}, {ch_t=}")
-        # print(f"{s_character_dict=}, {t_character_dict=}")
-        s_character_list = [s_char for s_char in s_character_dict.values() ]
-        t_character_list = [t_char for t_char in t_character_dict.values() ]
-        return sorted(s_character_list) == sorted(t_character_list)
-
+            if alpha_dict.get(ch_s) == None and ch_t not in alpha_dict.values():
+                alpha_dict[ch_s] = ch_t
+            elif alpha_dict.get(ch_s) == None or alpha_dict[ch_s] != ch_t:
+                return False
+        result = ""
+        for ch_s in s:
+            result += alpha_dict[ch_s]
+        return result == t
