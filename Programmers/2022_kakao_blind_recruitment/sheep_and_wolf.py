@@ -2,7 +2,11 @@ from collections import defaultdict
 
 '''
 - root_node를 기준으로 왼쪽, 오른쪽을 순회한다.
-- 
+- copy on write CS
+    - process
+        - A process -> 1004
+        - B process -> 1004
+            - printf() // 실제 복사 // 2022 메모리 주소를 가리킴
 '''
 def can_I_go_there(cur_node, info, animal_farm):
     copy_animal_farm = {'sheep': animal_farm['sheep'], 'wolf': animal_farm['wolf']}
@@ -26,7 +30,9 @@ def dfs(root_node, tree, info, acc):
 몇마리인지, 거기까지 갈만한지는 확인하지 않는다.
 '''
 def is_there_any_other_sheep(cur_node, tree, info):
-    if dfs(cur_node, tree, info, 0) > 0:
+    count=  dfs(cur_node, tree, info, 0)
+    print(f"{count=}")
+    if count > 0:
         return True
     return False
 
@@ -62,10 +68,10 @@ def solution(info, edges):
 
     return animal_farm['sheep']
 
-info = [0,0,1,1,1,0,1,0,1,0,1,1]
-edges = [[0,1],[1,2],[1,4],[0,8],[8,7],[9,10],[9,11],[4,3],[6,5],[4,6],[8,9]]
+# info = [0,0,1,1,1,0,1,0,1,0,1,1]
+# edges = [[0,1],[1,2],[1,4],[0,8],[8,7],[9,10],[9,11],[4,3],[6,5],[4,6],[8,9]]
 
-# info = [0,1,0,1,1,0,1,0,0,1,0]
-# edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,8],[6,9],[9,10]]
+info = [0,1,0,1,1,0,1,0,0,1,0]
+edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,8],[6,9],[9,10]]
 
 print(f"{solution(info, edges)=}")
