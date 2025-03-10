@@ -24,18 +24,13 @@ class Solution:
         '''
         # for in range()
         sorted_citations = sorted(citations)
-        print(f"sorted_citations : {sorted_citations}")
         paper_count = len(sorted_citations)
-        last_idx = paper_count - 1
-        h_index = 0
-        for idx, citation in enumerate(citations):
-            print(f"citation : {citation}")
-            citation_paper_count = last_idx - idx
-            print(f"citation_paper_count : {citation_paper_count}")
-            cur_h_index = min(citation, idx + 1)
-            print(f"cur_h_index : {cur_h_index}")
-            if cur_h_index <= h_index:
+        h_index = -1
+        for idx, citation in enumerate(sorted_citations):
+            citation_paper_count = paper_count - idx
+            # citation_paper_count을 넣지 않아서 문제가 되었었음
+            cur_h_index = min(citation, citation_paper_count)
+            if cur_h_index < h_index:
                 break
-            h_index = idx
-        return sorted_citations[h_index]
-
+            h_index = cur_h_index
+        return h_index
